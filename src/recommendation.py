@@ -15,7 +15,6 @@ def load_data():
     Load MovieLens 1M data:
     - ratings.dat: user_id, movie_id, rating, timestamp
     - movies.dat: movie_id, title, genres (pipe-separated)
-    Devuelve dos DataFrames: ratings y movies.
     Returns two DataFrames: ratings and movies.
     """
     base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -48,7 +47,6 @@ def clean_title(title):
     """
     Move 'A', 'An', 'The' at end of title to front.
     e.g. 'Close Shave, A (1995)' -> 'A Close Shave (1995)'
-    Solo mueve los artículos A, An o The al inicio.
     """
     pattern = r'^(.*),\s*(A|An|The)\s*\((\d{4})\)$'
     m = re.match(pattern, title)
@@ -64,7 +62,6 @@ def train_model(ratings):
     1. Load ratings into Surprise dataset
     2. Perform cross-validation (RMSE, MAE)
     3. Fit model on entire dataset
-    Devuelve el modelo entrenado.
     Returns the trained algorithm object.
     """
     reader = Reader(rating_scale=(1, 5))
@@ -98,7 +95,6 @@ def get_user_ratings(movies, k=10):
     Ask user to rate k random movies (cold-start).
     - Shows movie titles, collects ratings 1-5.
     - Assigns user_id=0, captures timestamp.
-    Devuelve lista de tuplas (0, movie_id, rating, timestamp).
     """
     sample = movies[['movie_id','title']].sample(n=k).to_dict('records')
     user_ratings = []
